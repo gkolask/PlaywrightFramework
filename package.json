@@ -4,10 +4,11 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "test": "npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json features/**/*.feature && node reports/report.js",
+    "test": "npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json --format junit:reports/cucumber-results.xml features/**/*.feature && node reports/report.js",
     "test:playwright": "npx playwright test --config=playwright.config.ts && node scripts/fix-junit-filepaths.js",
-    "test:headless": "npx cucumber-js --publish-quiet --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json features/**/*.feature && node reports/report.js",
-    "test:open": "npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json features/**/*.feature && node reports/report.js && powershell -NoProfile -Command Start-Process -FilePath 'reports\\cucumber-report.html'"
+    "test:all": "npm run test && npm run test:playwright",
+    "test:headless": "npx cucumber-js --publish-quiet --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json --format junit:reports/cucumber-results.xml features/**/*.feature && node reports/report.js",
+    "test:open": "npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json --format junit:reports/cucumber-results.xml features/**/*.feature && node reports/report.js && powershell -NoProfile -Command Start-Process -FilePath 'reports\\cucumber-report.html'"
   },
   "dependencies": {
     "chai": "^4.3.7",

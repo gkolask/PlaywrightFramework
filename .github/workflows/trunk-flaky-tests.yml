@@ -20,16 +20,21 @@ jobs:
           node-version: '20'
       - run: npm install
       - run: npx playwright install --with-deps
-      - run: npm run test:playwright
+      - name: Run Cucumber tests
+        run: npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json --format junit:reports/cucumber-results.xml features/**/*.feature && node reports/report.js
+        continue-on-error: true
+      - name: Run Playwright tests
+        run: npm run test:playwright
+        continue-on-error: true
       - name: Download Trunk Analytics CLI
         run: |
           curl -fL --retry 3 "https://github.com/trunk-io/analytics-cli/releases/download/0.13.2/trunk-analytics-cli-x86_64-unknown-linux.tar.gz" | tar -xz
           chmod +x trunk-analytics-cli
-      - name: Validate JUnit report
+      - name: Validate JUnit reports
         run: |
-          ./trunk-analytics-cli validate --junit-paths "reports/junit-results.xml"
-      - name: Upload JUnit report to Trunk
+          ./trunk-analytics-cli validate --junit-paths "reports/junit-results.xml,reports/cucumber-results.xml"
+      - name: Upload JUnit reports to Trunk
         run: |
-          ./trunk-analytics-cli upload --junit-paths "reports/junit-results.xml" \
+          ./trunk-analytics-cli upload --junit-paths "reports/junit-results.xml,reports/cucumber-results.xml" \
             --org-url-slug "shriram" \
             --token "$TRUNK_API_TOKEN"
