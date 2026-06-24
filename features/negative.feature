@@ -7,4 +7,4 @@ Feature: Negative tests to validate failures
 
   Scenario: Missing heading should fail
     Given I open the example domain
-    Then I should see the main heading "No Heading"
+    Then I should see the main heading "No Heading1"
