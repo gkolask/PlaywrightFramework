@@ -1,0 +1,22 @@
+{
+  "name": "playwright-cucumber-framework",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json features/**/*.feature && node reports/report.js",
+    "test:playwright": "npx playwright test --config=playwright.config.ts && node scripts/fix-junit-filepaths.js",
+    "test:headless": "npx cucumber-js --publish-quiet --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json features/**/*.feature && node reports/report.js",
+    "test:open": "npx cucumber-js --require features/support/**/*.js --require features/step-definitions/**/*.js --format json:reports/cucumber-report.json features/**/*.feature && node reports/report.js && powershell -NoProfile -Command Start-Process -FilePath 'reports\\cucumber-report.html'"
+  },
+  "dependencies": {
+    "chai": "^4.3.7",
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^9.0.0",
+    "@playwright/test": "^1.40.0",
+    "cucumber-html-reporter": "^7.0.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="1.895978">
+<testsuite name="tests\example.spec.ts" timestamp="2026-06-24T16:12:12.244Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.407" errors="0">
+<testcase name="basic example.com smoke test" classname="tests\example.spec.ts" time="0.407" file="tests/example.spec.ts">
+</testcase>
+</testsuite>
+</testsuites>
