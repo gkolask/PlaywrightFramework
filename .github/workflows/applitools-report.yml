@@ -1,0 +1,40 @@
+name: Applitools Cucumber Report
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  applitools-report:
+    runs-on: ubuntu-latest
+    env:
+      APPLITOOLS_API_KEY: ${{ secrets.APPLITOOLS_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - name: Run Cucumber features
+        run: |
+          npm run test || true
+      - name: Generate Applitools HTML report
+        run: |
+          npm run report:applitools
+      - name: Upload Applitools report HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: applitools-report
+          path: reports/applitools-report.html
+      - name: Upload Applitools classification JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: applitools-classification-json
+          path: reports/applitools-classification-cucumber.json
